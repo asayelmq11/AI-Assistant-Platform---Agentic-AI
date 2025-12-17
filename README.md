@@ -15,23 +15,23 @@ The platform is designed as a hands-on reference for developers exploring modern
 
 ## Project Structure
 
-├── project_code/                  # Core Streamlit application
-│   ├── .streamlit/                # Streamlit configuration
-│   │   └── config.toml
-│   ├── pages/                     # Application pages (agents & features)
-│   │   ├── 1_Prompt_Generator.py  # Prompt Generator agent
-│   │   ├── 2_Chatbot_Agent.py     # Tool-using chatbot agent
-│   │   ├── 3_Chat_with_your_Data.py # Agentic RAG (PDF chat + vector store)
-│   │   └── 4_MCP_Agent.py         # MCP-connected agent
-│   ├── tmp/                       # Temporary workspace for uploaded files
-│   ├── ui/                        # Shared UI layer
-│   │   ├── __pycache__/           # Python cache
-│   │   └── layout.py              # Layout, theme, and UI helpers
-│   ├── Home.py                    # Application entry point
-│   ├── requirements.txt           # Python dependencies
-│   └── README.md                  # Project documentation
+├── project_code/                  # Core Streamlit application  
+│   ├── .streamlit/                # Streamlit configuration  
+│   │   └── config.toml  
+│   ├── pages/                     # Application pages (agents & features)  
+│   │   ├── 1_Prompt_Generator.py  # Prompt Generator agent  
+│   │   ├── 2_Chatbot_Agent.py     # Tool-using chatbot agent  
+│   │   ├── 3_Chat_with_your_Data.py # Agentic RAG (PDF chat + vector store)  
+│   │   └── 4_MCP_Agent.py         # MCP-connected agent  
+│   ├── tmp/                       # Temporary workspace for uploaded files  
+│   ├── ui/                        # Shared UI layer  
+│   │   ├── __pycache__/           # Python cache  
+│   │   └── layout.py              # Layout, theme, and UI helpers  
+│   ├── Home.py                    # Application entry point  
+│   ├── requirements.txt           # Python dependencies  
+│   └── README.md                  # Project documentation  
 
-
+---
 
 ## Running the Project
 
@@ -40,15 +40,15 @@ cd project_code/
 pip install -r requirements.txt
 streamlit run Home.py
 
-
+```
 ## Key Features
 
-- **Prompt Generator** for structured and optimized prompt creation  
-- **Chatbot Agent** with external tool usage (search, Wikipedia, reasoning)  
-- **Agentic RAG** for querying uploaded PDF documents  
-- **Vector Store Visualization** with clustering and chunk inspection  
-- **MCP Agent** for connecting LLMs to external services via MCP  
-- **Streamlit UI** Modular, multi-page
+- Prompt Generator for structured and optimized prompt creation  
+- Chatbot Agent with external tool usage (search, Wikipedia, reasoning)  
+- Agentic RAG for querying uploaded PDF documents  
+- Vector Store Visualization with clustering and chunk inspection  
+- MCP Agent for connecting LLMs to external services via MCP  
+- Streamlit UI Modular, multi-page  
 
 ---
 
@@ -63,10 +63,10 @@ streamlit run Home.py
 
 ## Tech Stack
 
-**Languages**
-- Python
+### Languages
+- Python  
 
-**Frameworks & Libraries**
+### Frameworks & Libraries
 - Streamlit  
 - LangChain  
 - LangGraph  
@@ -74,11 +74,11 @@ streamlit run Home.py
 - Plotly  
 - scikit-learn  
 
-**APIs & Tools**
+### APIs & Tools
 - OpenAI API  
-- Model Context Protocol (MCP) - zapier 
+- Model Context Protocol (MCP) - zapier  
 - Wikipedia  
 - ArXiv  
-- Tavily 
+- Tavily  
 - DuckDuckGo Search  
-
+```
