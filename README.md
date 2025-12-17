@@ -13,6 +13,34 @@ The platform is designed as a hands-on reference for developers exploring modern
 
 ---
 
+## Project Structure
+
+├── project_code/                  # Core Streamlit application
+│   ├── .streamlit/                # Streamlit configuration
+│   │   └── config.toml
+│   ├── pages/                     # Application pages (agents & features)
+│   │   ├── 1_Prompt_Generator.py  # Prompt Generator agent
+│   │   ├── 2_Chatbot_Agent.py     # Tool-using chatbot agent
+│   │   ├── 3_Chat_with_your_Data.py # Agentic RAG (PDF chat + vector store)
+│   │   └── 4_MCP_Agent.py         # MCP-connected agent
+│   ├── tmp/                       # Temporary workspace for uploaded files
+│   ├── ui/                        # Shared UI layer
+│   │   ├── __pycache__/           # Python cache
+│   │   └── layout.py              # Layout, theme, and UI helpers
+│   ├── Home.py                    # Application entry point
+│   ├── requirements.txt           # Python dependencies
+│   └── README.md                  # Project documentation
+
+
+
+## Running the Project
+
+```bash
+cd project_code/
+pip install -r requirements.txt
+streamlit run Home.py
+
+
 ## Key Features
 
 - **Prompt Generator** for structured and optimized prompt creation  
@@ -54,29 +82,3 @@ The platform is designed as a hands-on reference for developers exploring modern
 - Tavily 
 - DuckDuckGo Search  
 
----
-
-## Project Structure
-
-project_code/
-├── .streamlit/ # Streamlit configuration
-│ └── config.toml
-├── pages/ # Application pages
-│ ├── 1_Prompt_Generator.py
-│ ├── 2_Chatbot_Agent.py
-│ ├── 3_Chat_with_your_Data.py
-│ └── 4_MCP_Agent.py
-├── tmp/ # Temporary files (PDF uploads)
-├── ui/ # Shared UI components
-│ └── layout.py
-├── Home.py # Application entry point
-├── requirements.txt # Dependencies
-└── README.md
-
-
-## Running the Project
-
-```bash
-cd project_code/
-pip install -r requirements.txt
-streamlit run Home.py
