@@ -33,6 +33,9 @@ from langchain_community.tools import WikipediaQueryRun, ArxivQueryRun
 # ArxivAPIWrapper: Handles ArXiv API calls
 from langchain_community.utilities import WikipediaAPIWrapper, ArxivAPIWrapper
 
+from langchain_core.messages import SystemMessage, HumanMessage, AIMessage
+import re
+
 # create_react_agent: Creates an agent that can reason and use tools
 from langgraph.prebuilt import create_react_agent
 
@@ -73,6 +76,26 @@ if "agent" not in st.session_state:
 
 if "agent_messages" not in st.session_state:
     st.session_state.agent_messages = []  # Store chat history
+
+RECENCY_SYSTEM_PROMPT = (
+    # Fresh, grounded answers: search first, then answer with sources
+    "You are a grounded, recency-aware assistant. For every request, you must call Tavily web search "
+    "before answering. Do not answer from prior knowledge. If Tavily returns no results, reply "
+    "exactly: 'No reliable web source found.' If research papers are requested, also use arXiv. "
+    "Prefer recent sources automatically (no hardcoded dates), and include publication dates when available. "
+    "Provide a normal, helpful answer, then add a short 'Sources' section with 2–4 links from the Tavily results. "
+    "If multiple sources disagree, present each version; do not reconcile. If insufficient recent results, say so."
+)
+
+# Expanded recency detection (EN + AR)
+RECENT_QUERY_REGEX = re.compile(
+    r"(latest|recent|update|updates|news|this month|this year|current|"
+    r"آخر|اخر|أحدث|احدث|جديد|تحديث|تحديثات|مستجدات|اليوم|هذا الشهر|هذه السنة)",
+    re.IGNORECASE,
+)
+
+# Non-capturing year pattern to return full years
+YEAR_REGEX = re.compile(r"\b(?:19|20)\d{2}\b")
 
 
 # =========================================================
@@ -183,7 +206,7 @@ if not st.session_state.agent:
     )
     
     # Create Tavily search tool (for web search)
-    search_tool = TavilySearchResults(max_results=3)
+    search_tool = TavilySearchResults(max_results=2)
     
     # ✨ NEW: Create Wikipedia tool (for encyclopedia articles)
     wikipedia = WikipediaQueryRun(
@@ -243,13 +266,53 @@ if user_input:
     # Generate response using agent
     with st.chat_message("assistant"):
         with st.spinner("🔍 Searching and thinking..."):
-            # Invoke agent with all messages
-            response = st.session_state.agent.invoke({
-                "messages": st.session_state.agent_messages
-            })
-            
-            # Extract response text from agent output
+            def to_lc_messages(msgs):
+                lc = []
+                for m in msgs:
+                    if m.get("role") == "user":
+                        lc.append(HumanMessage(content=m.get("content", "")))
+                    else:
+                        lc.append(AIMessage(content=m.get("content", "")))
+                return lc
+
+            def is_recency_query(text: str) -> bool:
+                return bool(RECENT_QUERY_REGEX.search(text))
+
+            def contains_old_year(text: str) -> bool:
+                years = [int(m.group(0)) for m in YEAR_REGEX.finditer(text)]
+                return any(y < 2024 for y in years)
+
+            def has_source_link(text: str) -> bool:
+                return "http" in text
+
+            history_tail = st.session_state.agent_messages[-8:]
+            lc_messages = [SystemMessage(content=RECENCY_SYSTEM_PROMPT)] + to_lc_messages(history_tail)
+
+            response = st.session_state.agent.invoke(
+                {"messages": lc_messages},
+                config={"recursion_limit": 8}
+            )
             response_text = response["messages"][-1].content
+
+            # Reliability guard: retry once if no sources/links or (recency ask and stale years)
+            need_retry = (not has_source_link(response_text)) or (is_recency_query(user_input) and contains_old_year(response_text))
+            if need_retry:
+                guard_msg = SystemMessage(
+                    content=(
+                        "Your previous answer lacked web sources or used stale data. "
+                        "Call Tavily search now (and arXiv if papers) before answering. "
+                        "Provide a normal helpful answer, then a 'Sources' section with 2–4 links. "
+                        "If Tavily returns no results, reply exactly: 'No reliable web source found.' "
+                        "Do not rely on prior knowledge."
+                    )
+                )
+                retry_messages = lc_messages + [guard_msg]
+                response = st.session_state.agent.invoke(
+                    {"messages": retry_messages},
+                    config={"recursion_limit": 8}
+                )
+                response_text = response["messages"][-1].content
+
             # Display response as normal chat text
             st.markdown(response_text)
             
