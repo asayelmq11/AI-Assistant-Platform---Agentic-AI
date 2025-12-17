@@ -14,7 +14,7 @@ The platform is designed as a hands-on reference for developers exploring modern
 ---
 
 ## Project Structure
-
+```
 ├── project_code/                  # Core Streamlit application  
 │   ├── .streamlit/                # Streamlit configuration  
 │   │   └── config.toml  
@@ -30,7 +30,7 @@ The platform is designed as a hands-on reference for developers exploring modern
 │   ├── Home.py                    # Application entry point  
 │   ├── requirements.txt           # Python dependencies  
 │   └── README.md                  # Project documentation  
-
+```
 ---
 
 ## Running the Project
