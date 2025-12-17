@@ -80,5 +80,4 @@ streamlit run Home.py
 - Wikipedia  
 - ArXiv  
 - Tavily  
-- DuckDuckGo Search  
-```
+- DuckDuckGo Search
