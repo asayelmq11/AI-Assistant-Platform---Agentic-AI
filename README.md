@@ -1,4 +1,4 @@
-# AI Assistant Platform
+# AI Assistant Platform 🤖
 
 A modular Agentic AI platform built with Streamlit, demonstrating practical LLM workflows such as tool-augmented agents, Retrieval-Augmented Generation (RAG), vector search, and Model Context Protocol (MCP) integration.
 
@@ -52,7 +52,7 @@ streamlit run Home.py
 
 ---
 
-## Built-in Applications
+## Built-in Applications 
 
 - **Prompt Generator** – Guided prompt engineering assistant  
 - **Chatbot Agent** – Conversational agent with integrated tools  
