@@ -1,0 +1,546 @@
+/* ==========================================================================
+   Bashayer Qaid — Personal Hospitality Profile
+   Print stylesheet. One .page element = one A4 page in the PDF.
+   ========================================================================== */
+
+@font-face { font-family: "Cormorant"; src: url("fonts/cormorant-garamond-latin-300-normal.woff2") format("woff2"); font-weight: 300; font-style: normal; }
+@font-face { font-family: "Cormorant"; src: url("fonts/cormorant-garamond-latin-300-italic.woff2") format("woff2"); font-weight: 300; font-style: italic; }
+@font-face { font-family: "Cormorant"; src: url("fonts/cormorant-garamond-latin-400-normal.woff2") format("woff2"); font-weight: 400; font-style: normal; }
+@font-face { font-family: "Cormorant"; src: url("fonts/cormorant-garamond-latin-400-italic.woff2") format("woff2"); font-weight: 400; font-style: italic; }
+@font-face { font-family: "Cormorant"; src: url("fonts/cormorant-garamond-latin-500-normal.woff2") format("woff2"); font-weight: 500; font-style: normal; }
+@font-face { font-family: "Cormorant"; src: url("fonts/cormorant-garamond-latin-500-italic.woff2") format("woff2"); font-weight: 500; font-style: italic; }
+@font-face { font-family: "Cormorant"; src: url("fonts/cormorant-garamond-latin-600-normal.woff2") format("woff2"); font-weight: 600; font-style: normal; }
+@font-face { font-family: "Cormorant"; src: url("fonts/cormorant-garamond-latin-600-italic.woff2") format("woff2"); font-weight: 600; font-style: italic; }
+@font-face { font-family: "Jost"; src: url("fonts/jost-latin-300-normal.woff2") format("woff2"); font-weight: 300; }
+@font-face { font-family: "Jost"; src: url("fonts/jost-latin-400-normal.woff2") format("woff2"); font-weight: 400; }
+@font-face { font-family: "Jost"; src: url("fonts/jost-latin-500-normal.woff2") format("woff2"); font-weight: 500; }
+
+:root {
+  --ivory: #f7f2e8;
+  --ivory-deep: #efe7d8;
+  --charcoal: #24221f;
+  --ink-soft: #4a463f;
+  --muted: #8a8172;
+  --gold: #a8875a;
+  --gold-soft: #cdb89a;
+  --green: #1f3a33;
+  --green-ink: #e9e2d2;
+  --rule: rgba(36, 34, 31, 0.14);
+
+  --serif: "Cormorant", "Cormorant Garamond", Georgia, serif;
+  --sans: "Jost", "Helvetica Neue", Arial, sans-serif;
+
+  --page-w: 210mm;
+  --page-h: 297mm;
+  --margin-x: 22mm;
+  --margin-top: 24mm;
+  --margin-bottom: 22mm;
+}
+
+@page { size: A4; margin: 0; }
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+html, body {
+  background: #d9d3c7;
+  color: var(--charcoal);
+  font-family: var(--sans);
+  font-weight: 300;
+  -webkit-print-color-adjust: exact;
+  print-color-adjust: exact;
+  text-rendering: optimizeLegibility;
+  font-kerning: normal;
+  font-variant-numeric: lining-nums;
+}
+
+@media print { html, body { background: var(--ivory); } }
+
+/* ---------- Page shell ---------- */
+
+.page {
+  position: relative;
+  width: var(--page-w);
+  height: var(--page-h);
+  padding: var(--margin-top) var(--margin-x) var(--margin-bottom);
+  background: var(--ivory);
+  overflow: hidden;
+  page-break-after: always;
+  break-after: page;
+  display: flex;
+  flex-direction: column;
+}
+.page:last-child { page-break-after: auto; break-after: auto; }
+
+@media screen {
+  body { padding: 12mm 0; }
+  .page { margin: 0 auto 10mm; box-shadow: 0 2px 18px rgba(0,0,0,0.12); }
+}
+
+/* Running header & folio */
+.running {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  font-size: 7.5pt;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--muted);
+  padding-bottom: 5mm;
+  border-bottom: 0.5pt solid var(--rule);
+  margin-bottom: 12mm;
+}
+.folio {
+  position: absolute;
+  left: var(--margin-x);
+  right: var(--margin-x);
+  bottom: 12mm;
+  display: flex;
+  justify-content: space-between;
+  font-size: 7.5pt;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.folio .num { color: var(--gold); letter-spacing: 0.12em; }
+
+/* ---------- Type ---------- */
+
+.eyebrow {
+  font-family: var(--sans);
+  font-size: 8pt;
+  font-weight: 500;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 6mm;
+}
+
+h1, h2, h3 { font-family: var(--serif); font-weight: 400; color: var(--charcoal); }
+
+h2 {
+  font-size: 34pt;
+  line-height: 1.04;
+  letter-spacing: -0.005em;
+  margin-bottom: 8mm;
+}
+h2 em { font-style: italic; color: var(--gold); font-weight: 400; }
+
+h3 {
+  font-size: 15pt;
+  line-height: 1.2;
+  font-weight: 500;
+  margin-bottom: 2mm;
+}
+
+p {
+  font-size: 10.5pt;
+  line-height: 1.62;
+  color: var(--ink-soft);
+  hyphens: none;
+}
+p + p { margin-top: 3.2mm; }
+
+.lede {
+  font-family: var(--serif);
+  font-size: 16pt;
+  line-height: 1.4;
+  color: var(--charcoal);
+  font-weight: 400;
+}
+
+.small { font-size: 8.5pt; line-height: 1.55; color: var(--muted); }
+
+.rule-gold { width: 14mm; height: 0.8pt; background: var(--gold); margin: 8mm 0; }
+
+/* ---------- Arch motif (welcome / doorway) ---------- */
+.arch { display: block; }
+.arch { color: var(--gold); }
+
+/* ==========================================================================
+   PAGE 1 — COVER
+   ========================================================================== */
+
+.cover {
+  background: var(--green);
+  color: var(--green-ink);
+  padding: 22mm 22mm 18mm;
+}
+.cover .top {
+  display: flex;
+  justify-content: space-between;
+  font-size: 7.5pt;
+  letter-spacing: 0.26em;
+  text-transform: uppercase;
+  color: var(--gold-soft);
+}
+.cover .arch-wrap {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10mm 0 4mm;
+}
+.cover .arch-wrap svg { width: 92mm; height: auto; }
+.cover .arch-wrap svg { color: var(--gold-soft); }
+.cover h1 {
+  font-size: 50pt;
+  line-height: 0.98;
+  color: #f4eee2;
+  font-weight: 300;
+  letter-spacing: -0.01em;
+}
+.cover h1 em { font-style: italic; color: var(--gold-soft); font-weight: 300; }
+.cover .opening {
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: 15pt;
+  line-height: 1.4;
+  color: #d8cfbd;
+  margin-top: 7mm;
+  max-width: 125mm;
+}
+.cover .name-block {
+  margin-top: 13mm;
+  padding-top: 6mm;
+  border-top: 0.5pt solid rgba(205, 184, 154, 0.4);
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+}
+.cover .name {
+  font-family: var(--serif);
+  font-size: 22pt;
+  font-weight: 500;
+  color: #f4eee2;
+  letter-spacing: 0.01em;
+}
+.cover .role {
+  font-size: 8pt;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: var(--gold-soft);
+  margin-top: 2mm;
+}
+.cover .prepared {
+  text-align: right;
+  font-size: 8pt;
+  line-height: 1.7;
+  letter-spacing: 0.06em;
+  color: #cfc6b4;
+}
+.cover .prepared strong { font-weight: 400; color: #f4eee2; }
+.cover .independent {
+  margin-top: 8mm;
+  font-size: 6.8pt;
+  letter-spacing: 0.08em;
+  color: rgba(216, 207, 189, 0.6);
+}
+
+/* ==========================================================================
+   PAGE 2 — WHO I AM
+   ========================================================================== */
+
+.who-grid {
+  display: grid;
+  grid-template-columns: 1fr 52mm;
+  gap: 12mm;
+  flex: 1;
+}
+.who-grid .lede { margin-bottom: 6mm; font-size: 14.5pt; }
+
+.facts {
+  border-left: 0.5pt solid var(--rule);
+  padding-left: 7mm;
+}
+.facts dt {
+  font-size: 7pt;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--gold);
+  font-weight: 500;
+  margin-top: 5.5mm;
+}
+.facts dt:first-child { margin-top: 0; }
+.facts dd {
+  font-family: var(--serif);
+  font-size: 12pt;
+  line-height: 1.3;
+  color: var(--charcoal);
+  margin-top: 1.2mm;
+}
+.facts dd span { display: block; font-family: var(--sans); font-size: 8.3pt; color: var(--muted); line-height: 1.45; margin-top: 0.6mm; }
+
+.viewpoint {
+  margin-top: 8mm;
+  padding: 6mm 7mm;
+  background: var(--ivory-deep);
+  border-left: 1.2pt solid var(--gold);
+}
+.viewpoint .label {
+  font-size: 7pt;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: var(--gold);
+  font-weight: 500;
+  margin-bottom: 2.5mm;
+}
+.viewpoint p {
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: 12.5pt;
+  line-height: 1.42;
+  color: var(--charcoal);
+}
+
+/* ==========================================================================
+   PAGE 3 — A LESSON FROM HAJJ
+   ========================================================================== */
+
+.hajj .context {
+  font-size: 9.5pt;
+  color: var(--muted);
+  max-width: 140mm;
+  margin-bottom: 9mm;
+}
+.story { position: relative; padding-left: 13mm; }
+.story::before {
+  content: "";
+  position: absolute;
+  left: 4.5mm;
+  top: 2mm;
+  bottom: 2mm;
+  width: 0.5pt;
+  background: var(--gold-soft);
+}
+.story .step { position: relative; }
+.story .step::before {
+  content: "";
+  position: absolute;
+  left: -9.7mm;
+  top: 0.6mm;
+  width: 2.4mm;
+  height: 2.4mm;
+  border-radius: 50%;
+  background: var(--ivory);
+  border: 0.8pt solid var(--gold);
+}
+.story .step + .step { margin-top: 5.5mm; }
+.story .step .k {
+  font-size: 7pt;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: var(--gold);
+  font-weight: 500;
+  margin-bottom: 1.4mm;
+}
+.story .step p { font-size: 10.8pt; }
+.story ul.actions {
+  list-style: none;
+  margin-top: 1mm;
+}
+.story ul.actions li {
+  font-size: 10.8pt;
+  line-height: 1.55;
+  color: var(--ink-soft);
+  padding-left: 5mm;
+  position: relative;
+}
+.story ul.actions li + li { margin-top: 1.2mm; }
+.story ul.actions li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.62em;
+  width: 2.4mm;
+  height: 0.5pt;
+  background: var(--gold);
+}
+
+.principle {
+  margin-top: auto;
+  padding-top: 8mm;
+  border-top: 0.5pt solid var(--rule);
+}
+.principle p {
+  font-family: var(--serif);
+  font-size: 17.5pt;
+  line-height: 1.32;
+  color: var(--charcoal);
+}
+.principle p em { color: var(--gold); }
+.principle .attr { font-family: var(--sans); font-size: 7.5pt; letter-spacing: 0.22em; text-transform: uppercase; color: var(--muted); margin-top: 3.5mm; }
+
+/* ==========================================================================
+   PAGE 4 — MARKETING → GUEST EXPERIENCE
+   ========================================================================== */
+
+.translate {
+  margin-top: 7mm;
+  border-top: 0.5pt solid var(--rule);
+}
+.translate .row {
+  display: grid;
+  grid-template-columns: 60mm 12mm 1fr;
+  align-items: center;
+  padding: 2.9mm 0;
+  border-bottom: 0.5pt solid var(--rule);
+}
+.translate .from {
+  font-size: 9pt;
+  line-height: 1.45;
+  color: var(--muted);
+}
+.translate .arrow { position: relative; height: 1px; margin: 0 3mm 0 1mm; background: var(--gold); }
+.translate .head .arrow { background: none; }
+.translate .row:not(.head) .arrow::after { content: ""; position: absolute; right: 0; top: -1mm; width: 2mm; height: 2mm; border-top: 0.6pt solid var(--gold); border-right: 0.6pt solid var(--gold); transform: translateY(0.05mm) rotate(45deg); transform-origin: center; }
+.translate .to {
+  font-family: var(--serif);
+  font-size: 12.5pt;
+  line-height: 1.26;
+  color: var(--charcoal);
+}
+.translate .head .from, .translate .head .to {
+  font-family: var(--sans);
+  font-size: 7pt;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: var(--gold);
+  font-weight: 500;
+}
+.honest {
+  margin-top: auto;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10mm;
+  padding-top: 6mm;
+  padding-bottom: 6mm;
+}
+.honest p { font-size: 9.3pt; line-height: 1.58; margin-top: 0; }
+
+/* ==========================================================================
+   PAGE 5 — HOW I COULD CONTRIBUTE / HEART
+   ========================================================================== */
+
+.heart { margin-top: 6mm; }
+.heart .row {
+  display: grid;
+  grid-template-columns: 13mm 33mm 1fr;
+  align-items: baseline;
+  padding: 2.3mm 0;
+  border-bottom: 0.5pt solid var(--rule);
+}
+.heart .row:first-child { border-top: 0.5pt solid var(--rule); }
+.heart .letter {
+  font-family: var(--serif);
+  font-size: 22pt;
+  line-height: 0.9;
+  color: var(--gold);
+  font-weight: 400;
+}
+.heart .word {
+  font-size: 7.5pt;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--charcoal);
+  font-weight: 500;
+}
+.heart .evidence { font-size: 9.3pt; line-height: 1.5; color: var(--ink-soft); }
+
+.contrib {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 7mm;
+}
+.contrib .n {
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: 12pt;
+  color: var(--gold);
+}
+.contrib h3 { font-size: 13pt; margin: 0.5mm 0 1.6mm; }
+.contrib p { font-size: 8.8pt; line-height: 1.5; }
+.contrib-title {
+  font-size: 7.5pt;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: var(--gold);
+  font-weight: 500;
+  margin: auto 0 4mm;
+  padding-top: 6mm;
+}
+.note-heart { margin-top: 5mm; margin-bottom: 6mm; font-size: 7.5pt; }
+
+/* ==========================================================================
+   PAGE 6 — AN OPEN INVITATION
+   ========================================================================== */
+
+.invite { background: var(--ivory); }
+.invite .arch-mark { width: 22mm; margin-bottom: 9mm; }
+.invite h2 { font-size: 40pt; }
+.areas {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  margin: 9mm 0 8mm;
+  border-top: 0.5pt solid var(--rule);
+  border-bottom: 0.5pt solid var(--rule);
+}
+.areas div {
+  padding: 5mm 3mm 5mm 0;
+  font-family: var(--serif);
+  font-size: 13pt;
+  line-height: 1.2;
+  color: var(--charcoal);
+}
+.areas div + div { padding-left: 4mm; border-left: 0.5pt solid var(--rule); }
+
+.signoff { margin-top: auto; }
+.signoff .thanks {
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: 15pt;
+  color: var(--ink-soft);
+  margin-bottom: 4mm;
+}
+.signoff .sig {
+  font-family: var(--serif);
+  font-size: 26pt;
+  font-weight: 500;
+  color: var(--charcoal);
+}
+.contact {
+  margin-top: 6mm;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 6mm;
+  padding-top: 5mm;
+  border-top: 0.5pt solid var(--rule);
+}
+.contact .k {
+  font-size: 7pt;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--gold);
+  font-weight: 500;
+  margin-bottom: 1.4mm;
+}
+.contact .v { font-size: 10pt; color: var(--charcoal); word-break: break-word; }
+.contact a { color: inherit; text-decoration: none; }
+
+/* Fields Bashayer still has to complete. The build script lists every
+   element with this class and warns that the PDF is not send-ready. */
+.to-complete {
+  display: inline-block;
+  font-size: 8.5pt !important;
+  color: #8c3b2a !important;
+  border: 0.6pt dashed #8c3b2a;
+  padding: 0.8mm 2mm;
+  letter-spacing: 0.02em;
+}
+
+.disclaimer {
+  margin-top: 8mm;
+  font-size: 7pt;
+  line-height: 1.55;
+  color: var(--muted);
+  max-width: 150mm;
+}

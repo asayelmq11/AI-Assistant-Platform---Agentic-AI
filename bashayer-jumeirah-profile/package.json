@@ -1,0 +1,12 @@
+{
+  "name": "bashayer-jumeirah-profile",
+  "private": true,
+  "description": "Source for Bashayer Qaid's personal hospitality profile (HTML/CSS -> PDF).",
+  "scripts": {
+    "build": "node build.js",
+    "preview": "node build.js --preview"
+  },
+  "devDependencies": {
+    "playwright": "1.56.1"
+  }
+}
